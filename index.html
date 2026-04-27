@@ -15,6 +15,7 @@ body {
   background-size: 400% 400%;
   animation: gradientMove 10s ease infinite;
   color: white;
+  overflow: hidden;
 }
 @keyframes gradientMove {
   0% {background-position: 0% 50%;}
@@ -22,31 +23,53 @@ body {
   100% {background-position: 0% 50%;}
 }
 
-/* Glass card */
-.card {
-  background: rgba(255,255,255,0.1);
-  backdrop-filter: blur(12px);
-  padding: 20px;
-  border-radius: 20px;
-  margin: 20px;
-  opacity: 0;
-  transform: translateY(40px);
-  transition: 0.8s;
-}
-.card.show {
-  opacity: 1;
-  transform: translateY(0);
+/* screens */
+.screen {
+  position: absolute;
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  text-align: center;
+  transition: 0.6s;
 }
 
-/* Image hover zoom */
+/* hidden */
+.hidden {
+  opacity: 0;
+  transform: scale(0.9);
+  pointer-events: none;
+}
+
+/* button */
+.btn {
+  background: white;
+  color: black;
+  padding: 10px 25px;
+  border-radius: 50px;
+  margin-top: 20px;
+  transition: 0.3s;
+}
+.btn:hover {
+  transform: scale(1.1);
+  box-shadow: 0 0 20px white;
+}
+
+/* image */
 img {
+  width: 250px;
+  border-radius: 15px;
+  margin-top: 20px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.5);
   transition: 0.4s;
 }
 img:hover {
-  transform: scale(1.08);
+  transform: scale(1.05);
 }
 
-/* Floating hearts */
+/* hearts */
 .heart {
   position: fixed;
   bottom: -20px;
@@ -55,113 +78,87 @@ img:hover {
 @keyframes floatUp {
   to { transform: translateY(-110vh); }
 }
-
-/* Glow button */
-.btn {
-  background: white;
-  color: black;
-  padding: 10px 20px;
-  border-radius: 50px;
-  transition: 0.3s;
-}
-.btn:hover {
-  transform: scale(1.1);
-  box-shadow: 0 0 20px white;
-}
 </style>
 </head>
 
 <body>
 
-<!-- Music -->
 <audio id="music" loop>
   <source src="music.mp3">
 </audio>
 
-<!-- Music Button -->
-<div class="fixed top-4 right-4">
-  <button onclick="toggleMusic()" class="btn">🎵</button>
-</div>
+<div id="app">
 
-<div class="text-center pt-10">
+<!-- Screen 1 -->
+<div id="s1" class="screen">
   <h1 class="text-4xl font-bold">For My Inspiration 💖</h1>
-  <p class="mt-2 text-gray-300">Scroll slowly...</p>
+  <p class="mt-2">I made something special for you</p>
+  <button onclick="next(2)" class="btn">Start</button>
 </div>
 
-<!-- Section 1 -->
-<div class="card text-center">
-  <img src="photo1.jpg" class="w-60 mx-auto rounded-xl shadow-xl">
+<!-- Screen 2 -->
+<div id="s2" class="screen hidden">
+  <img src="photo1.jpg">
   <p class="mt-4 text-lg">"A teacher like you doesn’t just teach… you inspire."</p>
+  <button onclick="next(3)" class="btn">Next</button>
 </div>
 
-<!-- Section 2 -->
-<div class="card text-center">
+<!-- Screen 3 -->
+<div id="s3" class="screen hidden">
   <p id="typing" class="text-lg"></p>
+  <button onclick="next(4)" class="btn">Next</button>
 </div>
 
-<!-- Section 3 -->
-<div class="card text-center">
-  <img src="photo2.jpg" class="w-60 mx-auto rounded-xl shadow-xl">
-  <p class="mt-4 text-lg">
-    "Your words gave me confidence, your guidance gave me direction."
-  </p>
+<!-- Screen 4 -->
+<div id="s4" class="screen hidden">
+  <img src="photo2.jpg">
+  <p class="mt-4 text-lg">"Your words gave me confidence, your guidance gave me direction."</p>
+  <button onclick="next(5)" class="btn">Final</button>
 </div>
 
-<!-- Section 4 -->
-<div class="card text-center">
-  <p class="text-xl">
-    I am truly lucky to have someone like you in my life 🌸
-  </p>
-</div>
-
-<!-- Final -->
-<div class="card text-center">
+<!-- Screen 5 -->
+<div id="s5" class="screen hidden">
   <h2 class="text-3xl">Thank You 💖</h2>
-  <p class="mt-2">
-    You are my inspiration, my support, and someone I respect deeply
-  </p>
-  <button onclick="celebrate()" class="mt-4 btn">Celebrate 🎉</button>
+  <p class="mt-2">You are my inspiration and support 🌸</p>
+  <button onclick="celebrate()" class="btn">Celebrate 🎉</button>
 
   <div id="finalMsg" class="hidden mt-4 text-lg">
-    Wishing you happiness, success & endless smiles 😊✨
+    Wishing you happiness & success always ✨
   </div>
 </div>
 
-<script>
-// Scroll reveal
-let cards = document.querySelectorAll('.card');
-window.addEventListener('scroll', () => {
-  cards.forEach(card => {
-    let top = card.getBoundingClientRect().top;
-    if(top < window.innerHeight - 50){
-      card.classList.add('show');
-    }
-  });
-});
+</div>
 
-// typing effect
+<script>
+function next(n){
+  document.querySelectorAll('.screen').forEach(s=>s.classList.add('hidden'));
+  document.getElementById('s'+n).classList.remove('hidden');
+
+  if(n === 2){
+    document.getElementById('music').play();
+  }
+
+  if(n === 3){
+    typeText();
+  }
+}
+
+// typing
 let text = "You are not just my mam, you are like my sister who supports, guides, and believes in me 💖";
-let i = 0;
-function typeEffect(){
+function typeText(){
+  let i = 0;
   let el = document.getElementById('typing');
+  el.innerHTML = "";
   function t(){
     if(i < text.length){
       el.innerHTML += text[i++];
-      setTimeout(t, 40);
+      setTimeout(t,40);
     }
   }
   t();
 }
-typeEffect();
 
-// music control
-function toggleMusic(){
-  let m = document.getElementById('music');
-  if(m.paused) m.play();
-  else m.pause();
-}
-
-// floating hearts
+// hearts
 setInterval(()=>{
   let h=document.createElement('div');
   h.className='heart';
