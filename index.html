@@ -7,7 +7,6 @@
 
 <script src="https://cdn.tailwindcss.com"></script>
 
-<!-- Premium Fonts -->
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&family=Montserrat:wght@300;400;600&display=swap" rel="stylesheet">
 
 <style>
@@ -15,11 +14,9 @@ body {
   font-family: 'Montserrat', sans-serif;
   margin: 0;
   min-height: 100vh;
-
   background: linear-gradient(-45deg, #0f0c29, #302b63, #1a1a2e, #000000);
   background-size: 400% 400%;
   animation: gradientMove 12s ease infinite;
-
   color: white;
 }
 
@@ -84,14 +81,14 @@ img:hover {
 
 <!-- Screen 1 -->
 <div id="s1" class="card space-y-6">
-  <h1 class="title text-5xl">Dear Nila 💖</h1>
-  <p class="text-gray-300">You are more than a teacher to me</p>
+  <h1 class="title text-5xl">Dear Mam 💖</h1>
+  <p class="text-gray-300">With respect and gratitude, this is for you</p>
   <button onclick="start()" class="btn">Open Surprise 🎁</button>
 </div>
 
 <!-- Screen 2 -->
 <div id="s2" class="hidden card space-y-6">
-  <h1 class="title text-4xl">For You, Nila 💌</h1>
+  <h1 class="title text-4xl">A Small Note 💌</h1>
   <img src="photo1.jpg" class="w-64 mx-auto">
   <p id="quote" class="text-gray-300 italic"></p>
   <button onclick="next(3)" class="btn">Next</button>
@@ -106,18 +103,18 @@ img:hover {
 
 <!-- Screen 4 -->
 <div id="s4" class="hidden card space-y-6">
-  <h1 class="title text-5xl">Thank You Nila 💖</h1>
+  <h1 class="title text-5xl">Thank You Mam 💖</h1>
   <img src="photo2.jpg" class="w-64 mx-auto">
   <p class="text-gray-300">
-    You are like my sister, my guide, and my inspiration 🌸
+    You are not just my teacher, but someone I deeply respect and feel comfortable with, like a sister 🌸
   </p>
   <button onclick="celebrate()" class="btn">Celebrate 🎉</button>
 
   <div id="finalMsg" class="hidden mt-4">
     <p class="text-lg text-yellow-300">
-      Thank you for being part of my life 💖<br>
-      You are not just my mam, you are like my sister, my support system, and my inspiration 🌸<br>
-      I will always respect and cherish you, Nila 😊
+      Thank you for always guiding me, supporting me, and believing in me 💖<br>
+      Your words and care mean a lot in my life 🌸<br>
+      I will always respect you and be grateful to have you 😊
     </p>
   </div>
 </div>
@@ -140,8 +137,8 @@ function next(n) {
   if(n === 3) typeText();
 }
 
-// emotional typing message
-let msg = "Nila... You are not just my mam, you are someone who understands me, supports me, and stands beside me like a sister. In every situation, your words give me strength and confidence. I may not say it often, but you truly mean a lot to me 💖";
+// respectful emotional message
+let msg = "You are not just my mam… you are someone who always guides me with patience and care. Your support gives me confidence, and your words give me strength. I feel very lucky to have someone like you in my life. I truly respect you, and at the same time, I feel a comfort like a sister when I talk to you 💖";
 
 function typeText() {
   let i = 0;
@@ -156,13 +153,13 @@ function typeText() {
   t();
 }
 
-// rotating quotes
+// respectful quotes
 let quotes = [
-  "Nila, you don't just teach… you inspire 💖",
-  "Some bonds are not by blood, but by heart 🌸",
-  "You are my guide, my support, and my inspiration",
-  "In you, I found a teacher, a mentor, and a sister",
-  "Your belief in me made me believe in myself"
+  "A great teacher inspires, guides, and cares deeply",
+  "Some people earn respect, some earn a place in the heart",
+  "Your guidance has made a difference in my life",
+  "Respect is taught, but care is felt 💖",
+  "You are someone I truly admire and respect"
 ];
 
 let qIndex = 0;
