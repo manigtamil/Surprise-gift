@@ -3,33 +3,57 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>For My Inspiration 💖</title>
+<title>My Inspiration 💖</title>
 
 <script src="https://cdn.tailwindcss.com"></script>
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
 
 <style>
 body {
   font-family: 'Poppins', sans-serif;
-  margin: 0;
-  scroll-behavior: smooth;
+  background: linear-gradient(-45deg, #0f0c29, #302b63, #24243e, #ff6ec4);
+  background-size: 400% 400%;
+  animation: gradientMove 10s ease infinite;
+  color: white;
+}
+@keyframes gradientMove {
+  0% {background-position: 0% 50%;}
+  50% {background-position: 100% 50%;}
+  100% {background-position: 0% 50%;}
 }
 
-/* Snap scrolling */
-.container {
-  scroll-snap-type: y mandatory;
-  overflow-y: scroll;
-  height: 100vh;
-}
-.section {
-  scroll-snap-align: start;
-  height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-  text-align: center;
+/* Glass card */
+.card {
+  background: rgba(255,255,255,0.1);
+  backdrop-filter: blur(12px);
   padding: 20px;
+  border-radius: 20px;
+  margin: 20px;
+  opacity: 0;
+  transform: translateY(40px);
+  transition: 0.8s;
+}
+.card.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Image hover zoom */
+img {
+  transition: 0.4s;
+}
+img:hover {
+  transform: scale(1.08);
+}
+
+/* Floating hearts */
+.heart {
+  position: fixed;
+  bottom: -20px;
+  animation: floatUp 6s linear infinite;
+}
+@keyframes floatUp {
+  to { transform: translateY(-110vh); }
 }
 
 /* Glow button */
@@ -44,76 +68,100 @@ body {
   transform: scale(1.1);
   box-shadow: 0 0 20px white;
 }
-
-/* Floating hearts */
-.heart {
-  position: fixed;
-  bottom: -20px;
-  animation: floatUp 6s linear infinite;
-}
-@keyframes floatUp {
-  to { transform: translateY(-110vh); }
-}
 </style>
 </head>
 
 <body>
 
+<!-- Music -->
 <audio id="music" loop>
   <source src="music.mp3">
 </audio>
 
-<div class="container">
+<!-- Music Button -->
+<div class="fixed top-4 right-4">
+  <button onclick="toggleMusic()" class="btn">🎵</button>
+</div>
+
+<div class="text-center pt-10">
+  <h1 class="text-4xl font-bold">For My Inspiration 💖</h1>
+  <p class="mt-2 text-gray-300">Scroll slowly...</p>
+</div>
 
 <!-- Section 1 -->
-<section class="section bg-gradient-to-br from-black via-purple-900 to-pink-700 text-white">
-  <h1 class="text-5xl font-bold">For My Inspiration 💖</h1>
-  <p class="mt-4 text-lg">Not just a teacher… something more</p>
-  <button onclick="start()" class="btn mt-6">Enter</button>
-</section>
+<div class="card text-center">
+  <img src="photo1.jpg" class="w-60 mx-auto rounded-xl shadow-xl">
+  <p class="mt-4 text-lg">"A teacher like you doesn’t just teach… you inspire."</p>
+</div>
 
 <!-- Section 2 -->
-<section class="section bg-gradient-to-br from-purple-800 to-indigo-900 text-white">
-  <img src="photo1.jpg" class="w-64 rounded-xl shadow-2xl">
-  <p class="mt-6 text-xl">"Some people teach, but very few inspire."</p>
-</section>
+<div class="card text-center">
+  <p id="typing" class="text-lg"></p>
+</div>
 
 <!-- Section 3 -->
-<section class="section bg-gradient-to-br from-indigo-900 to-blue-900 text-white">
-  <h2 class="text-3xl">You are one of them 💖</h2>
-  <p class="mt-4 max-w-md">
-    You are not just my mam… you are like my sister who guides, supports and motivates me always.
-  </p>
-</section>
-
-<!-- Section 4 -->
-<section class="section bg-gradient-to-br from-blue-900 to-purple-900 text-white">
-  <img src="photo2.jpg" class="w-64 rounded-xl shadow-2xl">
-  <p class="mt-6 text-xl">
+<div class="card text-center">
+  <img src="photo2.jpg" class="w-60 mx-auto rounded-xl shadow-xl">
+  <p class="mt-4 text-lg">
     "Your words gave me confidence, your guidance gave me direction."
   </p>
-</section>
+</div>
 
-<!-- Section 5 -->
-<section class="section bg-gradient-to-br from-purple-900 to-pink-700 text-white">
-  <h2 class="text-4xl font-bold">Thank You 💖</h2>
-  <p class="mt-4">You changed my life in ways I can’t explain</p>
+<!-- Section 4 -->
+<div class="card text-center">
+  <p class="text-xl">
+    I am truly lucky to have someone like you in my life 🌸
+  </p>
+</div>
 
-  <button onclick="celebrate()" class="btn mt-6">Celebrate 🎉</button>
+<!-- Final -->
+<div class="card text-center">
+  <h2 class="text-3xl">Thank You 💖</h2>
+  <p class="mt-2">
+    You are my inspiration, my support, and someone I respect deeply
+  </p>
+  <button onclick="celebrate()" class="mt-4 btn">Celebrate 🎉</button>
 
   <div id="finalMsg" class="hidden mt-4 text-lg">
-    Wishing you happiness & success always ✨
+    Wishing you happiness, success & endless smiles 😊✨
   </div>
-</section>
-
 </div>
 
 <script>
-function start(){
-  document.getElementById('music').play();
+// Scroll reveal
+let cards = document.querySelectorAll('.card');
+window.addEventListener('scroll', () => {
+  cards.forEach(card => {
+    let top = card.getBoundingClientRect().top;
+    if(top < window.innerHeight - 50){
+      card.classList.add('show');
+    }
+  });
+});
+
+// typing effect
+let text = "You are not just my mam, you are like my sister who supports, guides, and believes in me 💖";
+let i = 0;
+function typeEffect(){
+  let el = document.getElementById('typing');
+  function t(){
+    if(i < text.length){
+      el.innerHTML += text[i++];
+      setTimeout(t, 40);
+    }
+  }
+  t();
+}
+typeEffect();
+
+// music control
+function toggleMusic(){
+  let m = document.getElementById('music');
+  if(m.paused) m.play();
+  else m.pause();
 }
 
-// hearts
+// floating hearts
 setInterval(()=>{
   let h=document.createElement('div');
   h.className='heart';
