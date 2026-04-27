@@ -68,6 +68,15 @@ img:hover {
 @keyframes floatUp {
   to { transform: translateY(-110vh); }
 }
+
+/* cake animation */
+#cakeGif {
+  opacity: 0;
+  transition: opacity 1s ease;
+}
+.showCake {
+  opacity: 1 !important;
+}
 </style>
 </head>
 
@@ -82,12 +91,7 @@ img:hover {
 <!-- Screen 1 -->
 <div id="s1" class="card space-y-6">
   <h1 class="title text-5xl">Dear Mam 💖</h1>
-
-  <!-- YOUR IDEA IMPROVED -->
-  <p class="text-gray-300 text-lg">
-    First, you are my mam… but in every moment, you have been like a caring sister to me 💖
-  </p>
-
+  <p class="text-gray-300">With respect and gratitude, this is for you</p>
   <button onclick="start()" class="btn">Open Surprise 🎁</button>
 </div>
 
@@ -111,20 +115,23 @@ img:hover {
   <h1 class="title text-5xl">Thank You Mam 💖</h1>
   <img src="photo2.jpg" class="w-64 mx-auto">
   <p class="text-gray-300">
-    Your care, guidance, and support mean a lot to me 🌸
+    You are not just my teacher, but someone I deeply respect and feel comfortable with, like a sister 🌸
   </p>
-
   <button onclick="celebrate()" class="btn">Celebrate 🎉</button>
 
   <div id="finalMsg" class="hidden mt-4">
     <p class="text-lg text-yellow-300">
-      Thank you for always guiding me and supporting me 💖<br>
-      I truly respect you, and I feel lucky to have someone like you in my life 🌸<br>
-      You will always be special to me 😊
+      Thank you for always guiding me, supporting me, and believing in me 💖<br>
+      Your words and care mean a lot in my life 🌸<br>
+      I will always respect you and be grateful to have you 😊
     </p>
 
-    <!-- CAKE GIF -->
-    <img src="cake.gif" class="w-48 mx-auto mt-4 rounded-xl">
+    <!-- 🎂 Cake GIF -->
+    <img 
+      src="https://media.giphy.com/media/3o6fJbnY1v9a6v7Q3K/giphy.gif"
+      id="cakeGif"
+      class="w-56 mx-auto mt-4 rounded-xl"
+    >
   </div>
 </div>
 
@@ -146,8 +153,8 @@ function next(n) {
   if(n === 3) typeText();
 }
 
-// emotional message
-let msg = "First, you are my mam… but truly, you are someone who cares for me like a sister. Your words guide me, your support gives me strength, and your presence makes me feel comfortable. I may not express it often, but you mean a lot to me 💖";
+// message
+let msg = "You are not just my mam… you are someone who always guides me with patience and care. Your support gives me confidence, and your words give me strength. I feel very lucky to have someone like you in my life. I truly respect you, and at the same time, I feel a comfort like a sister when I talk to you 💖";
 
 function typeText() {
   let i = 0;
@@ -164,11 +171,11 @@ function typeText() {
 
 // quotes
 let quotes = [
-  "First, you are my mam… but always like a sister to me 💖",
-  "Some relationships are built with care, not just roles",
-  "Your guidance shaped me, your care supported me",
-  "Respect made me admire you, care made me feel close to you 🌸",
-  "You are someone I truly respect and feel comfortable with"
+  "A great teacher inspires, guides, and cares deeply",
+  "Some people earn respect, some earn a place in the heart",
+  "Your guidance has made a difference in my life",
+  "Respect is taught, but care is felt 💖",
+  "You are someone I truly admire and respect"
 ];
 
 let qIndex = 0;
@@ -193,6 +200,11 @@ setInterval(() => {
 // celebrate
 function celebrate() {
   document.getElementById('finalMsg').classList.remove('hidden');
+
+  // show cake
+  setTimeout(() => {
+    document.getElementById('cakeGif').classList.add('showCake');
+  }, 500);
 
   for (let i = 0; i < 100; i++) {
     let c = document.createElement('div');
