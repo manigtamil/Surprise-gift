@@ -6,35 +6,46 @@
 <title>For My Inspiration 💖</title>
 
 <script src="https://cdn.tailwindcss.com"></script>
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
 
 <style>
 body {
   font-family: 'Poppins', sans-serif;
-  background: linear-gradient(to bottom, #0f0c29, #302b63, #24243e);
-  color: white;
-  overflow-x: hidden;
+  margin: 0;
+  scroll-behavior: smooth;
 }
 
-/* Glass card */
-.card {
-  background: rgba(255,255,255,0.1);
-  backdrop-filter: blur(12px);
+/* Snap scrolling */
+.container {
+  scroll-snap-type: y mandatory;
+  overflow-y: scroll;
+  height: 100vh;
+}
+.section {
+  scroll-snap-align: start;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  text-align: center;
   padding: 20px;
-  border-radius: 20px;
-  margin: 40px auto;
-  max-width: 400px;
-  opacity: 0;
-  transform: translateY(40px);
-  transition: 1s;
 }
 
-.card.show {
-  opacity: 1;
-  transform: translateY(0);
+/* Glow button */
+.btn {
+  background: white;
+  color: black;
+  padding: 10px 20px;
+  border-radius: 50px;
+  transition: 0.3s;
+}
+.btn:hover {
+  transform: scale(1.1);
+  box-shadow: 0 0 20px white;
 }
 
-/* Hearts */
+/* Floating hearts */
 .heart {
   position: fixed;
   bottom: -20px;
@@ -43,110 +54,63 @@ body {
 @keyframes floatUp {
   to { transform: translateY(-110vh); }
 }
-
-/* Confetti */
-.confetti {
-  position: fixed;
-  width: 8px;
-  height: 8px;
-  animation: fall 3s linear;
-}
-@keyframes fall {
-  to { transform: translateY(110vh); }
-}
 </style>
 </head>
 
 <body>
 
-<!-- Music -->
 <audio id="music" loop>
   <source src="music.mp3">
 </audio>
 
-<audio id="voice">
-  <source src="voice.mp3">
-</audio>
+<div class="container">
 
-<!-- Music Control -->
-<div class="fixed top-4 right-4">
-  <button onclick="toggleMusic()" class="bg-white text-black px-3 py-1 rounded">🎵</button>
-</div>
+<!-- Section 1 -->
+<section class="section bg-gradient-to-br from-black via-purple-900 to-pink-700 text-white">
+  <h1 class="text-5xl font-bold">For My Inspiration 💖</h1>
+  <p class="mt-4 text-lg">Not just a teacher… something more</p>
+  <button onclick="start()" class="btn mt-6">Enter</button>
+</section>
 
-<!-- Title -->
-<div class="text-center mt-10">
-  <h1 class="text-4xl font-bold">For My Inspiration 💖</h1>
-  <p class="text-gray-300">Scroll slowly...</p>
-</div>
+<!-- Section 2 -->
+<section class="section bg-gradient-to-br from-purple-800 to-indigo-900 text-white">
+  <img src="photo1.jpg" class="w-64 rounded-xl shadow-2xl">
+  <p class="mt-6 text-xl">"Some people teach, but very few inspire."</p>
+</section>
 
-<!-- Slideshow -->
-<div class="card">
-  <img id="slide" src="photo1.jpg" class="rounded-xl">
-</div>
-
-<!-- Message -->
-<div class="card">
-  <p class="text-lg">
-    You are not just my mam… you are like my sister who guides, supports and inspires me 💖
+<!-- Section 3 -->
+<section class="section bg-gradient-to-br from-indigo-900 to-blue-900 text-white">
+  <h2 class="text-3xl">You are one of them 💖</h2>
+  <p class="mt-4 max-w-md">
+    You are not just my mam… you are like my sister who guides, supports and motivates me always.
   </p>
-</div>
+</section>
 
-<!-- Quote -->
-<div class="card">
-  <p>"Some people teach, but very few inspire. You are one of them."</p>
-</div>
+<!-- Section 4 -->
+<section class="section bg-gradient-to-br from-blue-900 to-purple-900 text-white">
+  <img src="photo2.jpg" class="w-64 rounded-xl shadow-2xl">
+  <p class="mt-6 text-xl">
+    "Your words gave me confidence, your guidance gave me direction."
+  </p>
+</section>
 
-<!-- Voice -->
-<div class="card text-center">
-  <p>Tap to hear my message 🎤</p>
-  <button onclick="playVoice()" class="bg-white text-black px-4 py-2 rounded mt-2">
-    Play Voice
-  </button>
-</div>
+<!-- Section 5 -->
+<section class="section bg-gradient-to-br from-purple-900 to-pink-700 text-white">
+  <h2 class="text-4xl font-bold">Thank You 💖</h2>
+  <p class="mt-4">You changed my life in ways I can’t explain</p>
 
-<!-- Final -->
-<div class="card text-center">
-  <h2 class="text-2xl">Thank You 💖</h2>
-  <p>You changed my life in ways I can’t explain 🌸</p>
-  <button onclick="celebrate()" class="bg-white text-black px-5 py-2 rounded mt-2">
-    Celebrate 🎆
-  </button>
+  <button onclick="celebrate()" class="btn mt-6">Celebrate 🎉</button>
 
-  <div id="finalMsg" class="hidden mt-3">
+  <div id="finalMsg" class="hidden mt-4 text-lg">
     Wishing you happiness & success always ✨
   </div>
+</section>
+
 </div>
 
 <script>
-// Scroll animation
-let cards = document.querySelectorAll('.card');
-window.addEventListener('scroll', () => {
-  cards.forEach(card => {
-    let top = card.getBoundingClientRect().top;
-    if(top < window.innerHeight - 50){
-      card.classList.add('show');
-    }
-  });
-});
-
-// slideshow
-let images = ["photo1.jpg","photo2.jpg","photo3.jpg"];
-let i = 0;
-setInterval(()=>{
-  i = (i + 1) % images.length;
-  document.getElementById('slide').src = images[i];
-}, 3000);
-
-// music control
-function toggleMusic(){
-  let m = document.getElementById('music');
-  if(m.paused) m.play();
-  else m.pause();
-}
-
-// voice
-function playVoice(){
-  document.getElementById('voice').play();
+function start(){
+  document.getElementById('music').play();
 }
 
 // hearts
@@ -165,9 +129,13 @@ function celebrate(){
 
   for(let i=0;i<120;i++){
     let c=document.createElement('div');
-    c.className='confetti';
-    c.style.left=Math.random()*100+'vw';
+    c.style.position='fixed';
+    c.style.width='8px';
+    c.style.height='8px';
     c.style.background=['pink','yellow','white'][Math.floor(Math.random()*3)];
+    c.style.left=Math.random()*100+'vw';
+    c.style.top='-10px';
+    c.style.animation='fall 3s linear';
     document.body.appendChild(c);
     setTimeout(()=>c.remove(),3000);
   }
