@@ -16,7 +16,6 @@ body {
   margin: 0;
   min-height: 100vh;
 
-  /* Deep premium gradient */
   background: linear-gradient(-45deg, #0f0c29, #302b63, #1a1a2e, #000000);
   background-size: 400% 400%;
   animation: gradientMove 12s ease infinite;
@@ -24,14 +23,16 @@ body {
   color: white;
 }
 
-/* Smooth moving gradient */
 @keyframes gradientMove {
   0% {background-position: 0% 50%;}
   50% {background-position: 100% 50%;}
   100% {background-position: 0% 50%;}
 }
 
-/* Glass card */
+.title { 
+  font-family: 'Playfair Display', serif;
+}
+
 .card {
   background: rgba(255,255,255,0.08);
   backdrop-filter: blur(12px);
@@ -40,13 +41,28 @@ body {
   box-shadow: 0 10px 40px rgba(0,0,0,0.6);
 }
 
-/* Fix full screen center */
-#app {
-  width: 100%;
-  height: 100vh;
+.btn {
+  background: linear-gradient(45deg, gold, orange);
+  color: black;
+  padding: 10px 25px;
+  border-radius: 50px;
+  font-weight: 600;
+  transition: 0.3s;
+}
+.btn:hover {
+  transform: scale(1.1);
+  box-shadow: 0 0 20px gold;
 }
 
-/* Hearts */
+img {
+  border-radius: 15px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.6);
+  transition: 0.4s;
+}
+img:hover {
+  transform: scale(1.05);
+}
+
 .heart {
   position: fixed;
   bottom: -20px;
@@ -67,35 +83,42 @@ body {
 <div id="app" class="w-full h-screen flex items-center justify-center text-center">
 
 <!-- Screen 1 -->
-<div id="s1" class="card fade space-y-6">
-  <h1 class="title text-5xl">Dear Mam 💖</h1>
+<div id="s1" class="card space-y-6">
+  <h1 class="title text-5xl">Dear Nila 💖</h1>
   <p class="text-gray-300">You are more than a teacher to me</p>
   <button onclick="start()" class="btn">Open Surprise 🎁</button>
 </div>
 
 <!-- Screen 2 -->
-<div id="s2" class="hidden card fade space-y-6">
-  <h1 class="title text-4xl">A Special Message 💌</h1>
+<div id="s2" class="hidden card space-y-6">
+  <h1 class="title text-4xl">For You, Nila 💌</h1>
   <img src="photo1.jpg" class="w-64 mx-auto">
+  <p id="quote" class="text-gray-300 italic"></p>
   <button onclick="next(3)" class="btn">Next</button>
 </div>
 
 <!-- Screen 3 -->
-<div id="s3" class="hidden card fade space-y-6">
+<div id="s3" class="hidden card space-y-6">
   <h1 class="title text-4xl">From My Heart ❤️</h1>
   <p id="text" class="text-lg text-gray-200"></p>
   <button onclick="next(4)" class="btn">Final</button>
 </div>
 
 <!-- Screen 4 -->
-<div id="s4" class="hidden card fade space-y-6">
-  <h1 class="title text-5xl">Thank You 💖</h1>
+<div id="s4" class="hidden card space-y-6">
+  <h1 class="title text-5xl">Thank You Nila 💖</h1>
   <img src="photo2.jpg" class="w-64 mx-auto">
-  <p class="text-gray-300">You are like my sister, guide, and inspiration 🌸</p>
+  <p class="text-gray-300">
+    You are like my sister, my guide, and my inspiration 🌸
+  </p>
   <button onclick="celebrate()" class="btn">Celebrate 🎉</button>
 
   <div id="finalMsg" class="hidden mt-4">
-    <p class="text-lg text-yellow-300">Wishing you happiness, success & endless smiles 😊</p>
+    <p class="text-lg text-yellow-300">
+      Thank you for being part of my life 💖<br>
+      You are not just my mam, you are like my sister, my support system, and my inspiration 🌸<br>
+      I will always respect and cherish you, Nila 😊
+    </p>
   </div>
 </div>
 
@@ -117,8 +140,9 @@ function next(n) {
   if(n === 3) typeText();
 }
 
-// typing effect
-let msg = "You are not just my mam, you are like my sister who guides me, supports me and inspires me every day. I am really lucky to have you in my life 💖";
+// emotional typing message
+let msg = "Nila... You are not just my mam, you are someone who understands me, supports me, and stands beside me like a sister. In every situation, your words give me strength and confidence. I may not say it often, but you truly mean a lot to me 💖";
+
 function typeText() {
   let i = 0;
   let el = document.getElementById('text');
@@ -131,6 +155,24 @@ function typeText() {
   }
   t();
 }
+
+// rotating quotes
+let quotes = [
+  "Nila, you don't just teach… you inspire 💖",
+  "Some bonds are not by blood, but by heart 🌸",
+  "You are my guide, my support, and my inspiration",
+  "In you, I found a teacher, a mentor, and a sister",
+  "Your belief in me made me believe in myself"
+];
+
+let qIndex = 0;
+function changeQuote(){
+  let el = document.getElementById("quote");
+  if(!el) return;
+  el.innerHTML = quotes[qIndex];
+  qIndex = (qIndex + 1) % quotes.length;
+}
+setInterval(changeQuote, 2500);
 
 // hearts
 setInterval(() => {
