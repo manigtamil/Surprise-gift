@@ -10,376 +10,552 @@
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&family=Montserrat:wght@300;400;600&display=swap" rel="stylesheet">
 
 <style>
-body { 
-  font-family: 'Montserrat', sans-serif;
-  margin: 0;
-  min-height: 100vh;
-  background: linear-gradient(-45deg, #0f0c29, #302b63, #1a1a2e, #000000);
-  background-size: 400% 400%;
-  animation: gradientMove 12s ease infinite;
-  color: white;
-  overflow: hidden;
+
+html{
+  scroll-behavior:smooth;
 }
 
-@keyframes gradientMove {
-  0% {background-position: 0% 50%;}
-  50% {background-position: 100% 50%;}
-  100% {background-position: 0% 50%;}
+body{
+  font-family:'Montserrat',sans-serif;
+  margin:0;
+  min-height:100vh;
+  overflow-y:auto;
+  overflow-x:hidden;
+
+  background:linear-gradient(-45deg,#0f0c29,#302b63,#1a1a2e,#000000);
+  background-size:400% 400%;
+  animation:gradientMove 12s ease infinite;
+  color:white;
 }
 
-.title { 
-  font-family: 'Playfair Display', serif;
+@keyframes gradientMove{
+  0%{background-position:0% 50%;}
+  50%{background-position:100% 50%;}
+  100%{background-position:0% 50%;}
 }
 
-.card {
-  background: rgba(255,255,255,0.08);
-  backdrop-filter: blur(12px);
-  padding: 25px;
-  border-radius: 20px;
-  box-shadow: 0 10px 40px rgba(0,0,0,0.6);
-  max-width: 700px;
+.title{
+  font-family:'Playfair Display',serif;
 }
 
-.btn {
-  background: linear-gradient(45deg, gold, orange);
-  color: black;
-  padding: 10px 25px;
-  border-radius: 50px;
-  font-weight: 600;
-  transition: 0.3s;
+/* Main app */
+#app{
+  width:100%;
+  min-height:100vh;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:20px;
 }
 
-.btn:hover {
-  transform: scale(1.1);
-  box-shadow: 0 0 20px gold;
+/* Card */
+.card{
+  background:rgba(255,255,255,0.08);
+  backdrop-filter:blur(14px);
+  padding:30px;
+  border-radius:25px;
+  box-shadow:0 10px 40px rgba(0,0,0,0.6);
+  max-width:720px;
+  width:100%;
+  animation:fadeIn 1s ease;
+  position:relative;
+  z-index:2;
 }
 
-img {
-  border-radius: 15px;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.6);
-  transition: 0.4s;
+@keyframes fadeIn{
+  from{
+    opacity:0;
+    transform:translateY(30px);
+  }
+  to{
+    opacity:1;
+    transform:translateY(0);
+  }
 }
 
-img:hover {
-  transform: scale(1.05);
+/* Button */
+.btn{
+  background:linear-gradient(45deg,gold,orange);
+  color:black;
+  padding:12px 28px;
+  border-radius:50px;
+  font-weight:600;
+  transition:0.4s;
+  border:none;
+  cursor:pointer;
 }
 
-/* Floating hearts */
-.heart {
-  position: fixed;
-  bottom: -20px;
-  animation: floatUp 6s linear infinite;
-  z-index: 1;
+.btn:hover{
+  transform:scale(1.08);
+  box-shadow:0 0 25px gold;
 }
 
-@keyframes floatUp {
-  to { transform: translateY(-110vh); }
+/* Image */
+img{
+  border-radius:18px;
+  box-shadow:0 10px 30px rgba(0,0,0,0.6);
+  transition:0.4s;
 }
 
-/* Cake animation */
-#cakeGif {
-  opacity: 0;
-  transition: opacity 1s ease;
+img:hover{
+  transform:scale(1.04);
 }
 
-.showCake {
-  opacity: 1 !important;
+/* Hearts */
+.heart{
+  position:fixed;
+  bottom:-20px;
+  animation:floatUp 6s linear infinite;
+  z-index:1;
+  pointer-events:none;
+}
+
+@keyframes floatUp{
+  to{
+    transform:translateY(-110vh);
+  }
+}
+
+/* Cake */
+#cakeGif{
+  opacity:0;
+  transform:scale(0.8);
+  transition:1s ease;
+}
+
+.showCake{
+  opacity:1 !important;
+  transform:scale(1) !important;
 }
 
 /* Popup */
-#birthdayPopup {
-  position: fixed;
-  inset: 0;
-  background: rgba(0,0,0,0.85);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 999;
-  opacity: 0;
-  pointer-events: none;
-  transition: 0.5s;
+#birthdayPopup{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,0.92);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  z-index:999;
+  opacity:0;
+  pointer-events:none;
+  transition:0.5s;
+  overflow:hidden;
 }
 
-#birthdayPopup.show {
-  opacity: 1;
-  pointer-events: auto;
+#birthdayPopup.show{
+  opacity:1;
+  pointer-events:auto;
 }
 
-.popupBox {
-  background: rgba(255,255,255,0.08);
-  backdrop-filter: blur(15px);
-  padding: 40px;
-  border-radius: 25px;
-  text-align: center;
-  animation: popupScale 1s ease;
-  box-shadow: 0 0 40px gold;
+.popupBox{
+  background:rgba(255,255,255,0.08);
+  backdrop-filter:blur(16px);
+  padding:45px;
+  border-radius:30px;
+  text-align:center;
+  box-shadow:0 0 60px gold;
+  animation:popupScale 1s ease;
+  position:relative;
+  z-index:5;
+  max-width:700px;
+  width:90%;
 }
 
-@keyframes popupScale {
-  0% {
-    transform: scale(0.5);
-    opacity: 0;
+@keyframes popupScale{
+  0%{
+    transform:scale(0.5);
+    opacity:0;
   }
-  100% {
-    transform: scale(1);
-    opacity: 1;
+  100%{
+    transform:scale(1);
+    opacity:1;
   }
 }
 
-/* Glow cracks background */
-.crack {
-  position: absolute;
-  width: 3px;
-  height: 200px;
-  background: linear-gradient(to bottom, transparent, gold, white);
-  opacity: 0.7;
-  animation: glowCrack 2s linear infinite;
+/* Glowing crack lines */
+.crack{
+  position:absolute;
+  width:4px;
+  height:220px;
+  background:linear-gradient(to bottom,transparent,gold,white);
+  opacity:0;
+  filter:blur(1px);
 }
 
-@keyframes glowCrack {
-  0% {
-    opacity: 0.2;
-    transform: scaleY(0.8);
+.burst{
+  animation:burstCrack 1s ease forwards;
+}
+
+@keyframes burstCrack{
+  0%{
+    opacity:0;
+    transform:scaleY(0) rotate(0deg);
   }
-  50% {
-    opacity: 1;
-    transform: scaleY(1.1);
+  40%{
+    opacity:1;
   }
-  100% {
-    opacity: 0.2;
-    transform: scaleY(0.8);
+  100%{
+    opacity:1;
+    transform:scaleY(1.4) rotate(15deg);
+    box-shadow:0 0 30px gold,0 0 60px white;
   }
 }
+
+/* Spark particles */
+.spark{
+  position:fixed;
+  width:10px;
+  height:10px;
+  border-radius:50%;
+  pointer-events:none;
+  animation:sparkFly 2s linear forwards;
+}
+
+@keyframes sparkFly{
+  0%{
+    transform:scale(1);
+    opacity:1;
+  }
+  100%{
+    transform:translateY(300px) scale(0);
+    opacity:0;
+  }
+}
+
+/* Floating glow circles */
+.glow{
+  position:absolute;
+  border-radius:50%;
+  background:rgba(255,215,0,0.15);
+  filter:blur(40px);
+  animation:floatGlow 6s ease-in-out infinite alternate;
+}
+
+@keyframes floatGlow{
+  from{
+    transform:translateY(-20px);
+  }
+  to{
+    transform:translateY(20px);
+  }
+}
+
 </style>
 </head>
 
 <body>
 
+<!-- Music -->
 <audio id="music" loop>
   <source src="music.mp3">
 </audio>
 
-<div id="app" class="w-full h-screen flex items-center justify-center text-center px-4">
+<!-- Background glow -->
+<div class="glow w-72 h-72 top-10 left-10"></div>
+<div class="glow w-96 h-96 bottom-10 right-10"></div>
+
+<div id="app" class="text-center">
 
 <!-- Screen 1 -->
 <div id="s1" class="card space-y-6">
-  <h1 class="title text-5xl">Dear Mam 💖</h1>
-  <p class="text-gray-300">With respect and gratitude, this is for you</p>
-  <button onclick="start()" class="btn">Open Surprise 🎁</button>
+
+  <h1 class="title text-5xl">
+    Dear Mam 💖
+  </h1>
+
+  <p class="text-gray-300 text-lg">
+    With respect, gratitude and care, this little surprise is specially made for you 🌸
+  </p>
+
+  <button onclick="start()" class="btn">
+    Open Surprise 🎁
+  </button>
+
 </div>
 
 <!-- Screen 2 -->
 <div id="s2" class="hidden card space-y-6">
-  <h1 class="title text-4xl">A Small Note 💌</h1>
+
+  <h1 class="title text-4xl">
+    A Small Note 💌
+  </h1>
 
   <img src="photo1.jpg" class="w-64 mx-auto">
 
-  <p id="quote" class="text-gray-300 italic"></p>
+  <p id="quote" class="text-gray-300 italic text-lg"></p>
 
-  <button onclick="next(3)" class="btn">Next</button>
+  <button onclick="next(3)" class="btn">
+    Next ✨
+  </button>
+
 </div>
 
 <!-- Screen 3 -->
 <div id="s3" class="hidden card space-y-6">
-  <h1 class="title text-4xl">From My Heart ❤️</h1>
 
-  <p id="text" class="text-lg text-gray-200"></p>
+  <h1 class="title text-4xl">
+    A Few Words For You ❤️
+  </h1>
 
-  <button onclick="next(4)" class="btn">Final</button>
+  <p id="text" class="text-lg leading-8 text-gray-200"></p>
+
+  <button onclick="next(4)" class="btn">
+    Final 💖
+  </button>
+
 </div>
 
 <!-- Screen 4 -->
 <div id="s4" class="hidden card space-y-6">
-  <h1 class="title text-5xl">Thank You Mam 💖</h1>
+
+  <h1 class="title text-5xl">
+    Thank You Mam 💖
+  </h1>
 
   <img src="photo2.jpg" class="w-64 mx-auto">
 
-  <p class="text-gray-300">
-    You are not just my teacher, but someone I deeply respect and feel comfortable with, like a sister 🌸
+  <p class="text-gray-300 text-lg leading-8">
+    You are not just my teacher...  
+    you are someone I deeply respect, trust, and feel comfortable with like my own sister 🌸
   </p>
 
   <button onclick="celebrate()" class="btn">
     Celebrate 🎉
   </button>
 
-  <div id="finalMsg" class="hidden mt-4">
+  <div id="finalMsg" class="hidden mt-4 space-y-4">
 
-    <p class="text-lg text-yellow-300">
-      Thank you for always guiding me, supporting me, and believing in me 💖<br>
-      Your words and care mean a lot in my life 🌸<br>
-      I will always respect you and be grateful to have you 😊
+    <p class="text-lg text-yellow-300 leading-8">
+      Thank you for always guiding me, supporting me, motivating me and believing in me 💖<br>
+      Your care means more than words can explain 🌸<br>
+      I will always respect you and feel grateful to have someone like you in my life 😊
     </p>
 
     <!-- Cake GIF -->
-    <img 
+    <img
       src="cake.gif"
       id="cakeGif"
       class="w-56 mx-auto mt-4 rounded-xl"
     >
 
   </div>
-</div>
 
 </div>
 
-<!-- Birthday Popup -->
+</div>
+
+<!-- Popup -->
 <div id="birthdayPopup">
 
-  <!-- glowing cracks -->
-  <div class="crack" style="left:10%; top:10%; transform: rotate(20deg);"></div>
-  <div class="crack" style="right:15%; top:20%; transform: rotate(-20deg);"></div>
-  <div class="crack" style="left:50%; top:5%; transform: rotate(10deg);"></div>
-  <div class="crack" style="right:40%; bottom:10%; transform: rotate(40deg);"></div>
+  <!-- cracks -->
+  <div class="crack" style="left:10%;top:10%;"></div>
+  <div class="crack" style="right:15%;top:15%;"></div>
+  <div class="crack" style="left:50%;top:5%;"></div>
+  <div class="crack" style="right:40%;bottom:5%;"></div>
+  <div class="crack" style="left:25%;bottom:10%;"></div>
 
   <div class="popupBox">
+
     <h1 class="text-5xl font-bold text-yellow-300 animate-pulse">
       🎂 Wish You Happy Birthday 🎂
     </h1>
 
-    <p class="mt-6 text-xl text-pink-200">
-      May your life always be filled with happiness, success, peace and beautiful smiles 💖
+    <p class="mt-6 text-xl text-pink-200 leading-8">
+      May your life always be filled with happiness, peace, success and beautiful smiles 💖
     </p>
 
-    <img 
+    <img
       src="cake.gif"
       class="w-60 mx-auto mt-6 rounded-xl shadow-2xl"
     >
 
+    <p class="mt-5 text-yellow-100 text-lg">
+      Stay happy always Mam 🌸✨
+    </p>
+
     <button onclick="closePopup()" class="btn mt-6">
       Close 💖
     </button>
+
   </div>
+
 </div>
 
 <script>
 
-function show(id) {
-  document.querySelectorAll('#app > div').forEach(el => el.classList.add('hidden'));
+/* show screens */
+function show(id){
+  document.querySelectorAll('#app > div').forEach(el=>{
+    el.classList.add('hidden');
+  });
+
   document.getElementById(id).classList.remove('hidden');
 }
 
-function start() {
+/* start */
+function start(){
   document.getElementById('music').play();
   show('s2');
 }
 
-function next(n) {
-  show('s' + n);
+/* next */
+function next(n){
+  show('s'+n);
 
-  if(n === 3) typeText();
+  if(n===3){
+    typeText();
+  }
 }
 
-// Typing Message
-let msg = "First by way you are my mam… but in my heart, you are always like one of my family members 🌸 Your care, guidance, and support make me feel comfortable and motivated every day. You are not only someone I respect deeply, but also one of my biggest inspirations in life. Your words give me confidence, your kindness gives me peace, and your encouragement gives me strength and support me like an sister. I truly feel lucky and grateful to have someone like you in my life 💖";
+/* typing text */
+let msg =
+"First by way you are my mam… but in my heart, you are always like one of my family members 🌸 Your guidance, kindness and support make me feel comfortable and motivated every day. You are not only someone I deeply respect, but also one of my biggest inspirations in life. Your words give me confidence, your care gives me peace, and your encouragement gives me strength. I truly feel lucky and grateful to have someone like you in my life 💖";
 
-function typeText() {
+function typeText(){
 
-  let i = 0;
+  let i=0;
 
-  let el = document.getElementById('text');
+  let el=document.getElementById('text');
 
-  el.innerHTML = "";
+  el.innerHTML="";
 
-  function t() {
+  function t(){
 
-    if (i < msg.length) {
+    if(i<msg.length){
 
       el.innerHTML += msg[i++];
 
-      setTimeout(t, 35);
+      setTimeout(t,35);
 
     }
 
   }
 
   t();
+
 }
 
-// Quotes
-let quotes = [
-  "A great teacher inspires, guides, and cares deeply",
-  "Some people earn respect, some earn a place in the heart",
-  "Your guidance has made a difference in my life",
-  "Respect is taught, but care is felt 💖",
-  "First by way you are my mam, but always you feel like my sister 🌸"
+/* rotating quotes */
+let quotes=[
+"A great teacher inspires, guides, and cares deeply 💖",
+"Some people earn respect, some earn a place in the heart 🌸",
+"Your guidance has made a beautiful difference in my life ✨",
+"First by way you are my mam, but always you feel like my sister 💕",
+"Your words motivate me more than you know 🌷"
 ];
 
-let qIndex = 0;
+let qIndex=0;
 
 function changeQuote(){
 
-  let el = document.getElementById("quote");
+  let el=document.getElementById("quote");
 
   if(!el) return;
 
-  el.innerHTML = quotes[qIndex];
+  el.innerHTML=quotes[qIndex];
 
-  qIndex = (qIndex + 1) % quotes.length;
+  qIndex=(qIndex+1)%quotes.length;
+
 }
 
-setInterval(changeQuote, 2500);
+setInterval(changeQuote,2500);
 
-// Hearts
-setInterval(() => {
+/* floating hearts */
+setInterval(()=>{
 
-  let h = document.createElement('div');
+  let h=document.createElement('div');
 
-  h.className = 'heart';
+  h.className='heart';
 
-  h.innerHTML = '💖';
+  h.innerHTML='💖';
 
-  h.style.left = Math.random() * 100 + 'vw';
+  h.style.left=Math.random()*100+'vw';
+
+  h.style.fontSize=(20+Math.random()*20)+'px';
 
   document.body.appendChild(h);
 
-  setTimeout(() => h.remove(), 6000);
+  setTimeout(()=>h.remove(),6000);
 
-}, 700);
+},700);
 
-// Celebrate
-function celebrate() {
+/* celebrate */
+function celebrate(){
 
   document.getElementById('finalMsg').classList.remove('hidden');
 
-  setTimeout(() => {
+  setTimeout(()=>{
     document.getElementById('cakeGif').classList.add('showCake');
-  }, 500);
+  },500);
 
-  // confetti
-  for (let i = 0; i < 100; i++) {
+  /* confetti */
+  for(let i=0;i<120;i++){
 
-    let c = document.createElement('div');
+    let c=document.createElement('div');
 
-    c.style.position = 'fixed';
+    c.style.position='fixed';
 
-    c.style.width = '8px';
+    c.style.width='10px';
 
-    c.style.height = '8px';
+    c.style.height='10px';
 
-    c.style.background = ['gold','pink','white'][Math.floor(Math.random()*3)];
+    c.style.background=
+    ['gold','pink','white','orange'][Math.floor(Math.random()*4)];
 
-    c.style.left = Math.random() * 100 + 'vw';
+    c.style.left=Math.random()*100+'vw';
 
-    c.style.top = '-10px';
+    c.style.top='-10px';
 
-    c.style.borderRadius = '50%';
+    c.style.borderRadius='50%';
 
-    c.style.animation = 'fall 3s linear';
+    c.style.animation='sparkFly 3s linear forwards';
 
     document.body.appendChild(c);
 
-    setTimeout(() => c.remove(), 3000);
+    setTimeout(()=>c.remove(),3000);
+
   }
 
-  // popup after 2 sec
-  setTimeout(() => {
+  /* popup */
+  setTimeout(()=>{
+
     document.getElementById('birthdayPopup').classList.add('show');
-  }, 2000);
+
+    /* crack burst animation */
+    document.querySelectorAll('.crack').forEach(c=>{
+      c.classList.add('burst');
+    });
+
+    /* sparks */
+    for(let i=0;i<80;i++){
+
+      let s=document.createElement('div');
+
+      s.className='spark';
+
+      s.style.left=Math.random()*100+'vw';
+
+      s.style.top=Math.random()*100+'vh';
+
+      s.style.background=
+      ['gold','white','pink'][Math.floor(Math.random()*3)];
+
+      document.body.appendChild(s);
+
+      setTimeout(()=>s.remove(),2000);
+
+    }
+
+  },2000);
+
 }
 
-// close popup
-function closePopup() {
+/* close popup */
+function closePopup(){
+
   document.getElementById('birthdayPopup').classList.remove('show');
+
 }
 
 </script>
