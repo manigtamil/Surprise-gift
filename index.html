@@ -18,6 +18,7 @@ body {
   background-size: 400% 400%;
   animation: gradientMove 12s ease infinite;
   color: white;
+  overflow: hidden;
 }
 
 @keyframes gradientMove {
@@ -36,6 +37,7 @@ body {
   padding: 25px;
   border-radius: 20px;
   box-shadow: 0 10px 40px rgba(0,0,0,0.6);
+  max-width: 700px;
 }
 
 .btn {
@@ -46,6 +48,7 @@ body {
   font-weight: 600;
   transition: 0.3s;
 }
+
 .btn:hover {
   transform: scale(1.1);
   box-shadow: 0 0 20px gold;
@@ -56,37 +59,107 @@ img {
   box-shadow: 0 10px 30px rgba(0,0,0,0.6);
   transition: 0.4s;
 }
+
 img:hover {
   transform: scale(1.05);
 }
 
+/* Floating hearts */
 .heart {
   position: fixed;
   bottom: -20px;
   animation: floatUp 6s linear infinite;
+  z-index: 1;
 }
+
 @keyframes floatUp {
   to { transform: translateY(-110vh); }
 }
 
-/* cake animation */
+/* Cake animation */
 #cakeGif {
   opacity: 0;
   transition: opacity 1s ease;
 }
+
 .showCake {
   opacity: 1 !important;
+}
+
+/* Popup */
+#birthdayPopup {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.85);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 999;
+  opacity: 0;
+  pointer-events: none;
+  transition: 0.5s;
+}
+
+#birthdayPopup.show {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.popupBox {
+  background: rgba(255,255,255,0.08);
+  backdrop-filter: blur(15px);
+  padding: 40px;
+  border-radius: 25px;
+  text-align: center;
+  animation: popupScale 1s ease;
+  box-shadow: 0 0 40px gold;
+}
+
+@keyframes popupScale {
+  0% {
+    transform: scale(0.5);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+/* Glow cracks background */
+.crack {
+  position: absolute;
+  width: 3px;
+  height: 200px;
+  background: linear-gradient(to bottom, transparent, gold, white);
+  opacity: 0.7;
+  animation: glowCrack 2s linear infinite;
+}
+
+@keyframes glowCrack {
+  0% {
+    opacity: 0.2;
+    transform: scaleY(0.8);
+  }
+  50% {
+    opacity: 1;
+    transform: scaleY(1.1);
+  }
+  100% {
+    opacity: 0.2;
+    transform: scaleY(0.8);
+  }
 }
 </style>
 </head>
 
-<body class="overflow-hidden">
+<body>
 
 <audio id="music" loop>
   <source src="music.mp3">
 </audio>
 
-<div id="app" class="w-full h-screen flex items-center justify-center text-center">
+<div id="app" class="w-full h-screen flex items-center justify-center text-center px-4">
 
 <!-- Screen 1 -->
 <div id="s1" class="card space-y-6">
@@ -98,48 +171,88 @@ img:hover {
 <!-- Screen 2 -->
 <div id="s2" class="hidden card space-y-6">
   <h1 class="title text-4xl">A Small Note 💌</h1>
+
   <img src="photo1.jpg" class="w-64 mx-auto">
+
   <p id="quote" class="text-gray-300 italic"></p>
+
   <button onclick="next(3)" class="btn">Next</button>
 </div>
 
 <!-- Screen 3 -->
 <div id="s3" class="hidden card space-y-6">
   <h1 class="title text-4xl">From My Heart ❤️</h1>
+
   <p id="text" class="text-lg text-gray-200"></p>
+
   <button onclick="next(4)" class="btn">Final</button>
 </div>
 
 <!-- Screen 4 -->
 <div id="s4" class="hidden card space-y-6">
   <h1 class="title text-5xl">Thank You Mam 💖</h1>
+
   <img src="photo2.jpg" class="w-64 mx-auto">
+
   <p class="text-gray-300">
     You are not just my teacher, but someone I deeply respect and feel comfortable with, like a sister 🌸
   </p>
-  <button onclick="celebrate()" class="btn">Celebrate 🎉</button>
+
+  <button onclick="celebrate()" class="btn">
+    Celebrate 🎉
+  </button>
 
   <div id="finalMsg" class="hidden mt-4">
+
     <p class="text-lg text-yellow-300">
       Thank you for always guiding me, supporting me, and believing in me 💖<br>
       Your words and care mean a lot in my life 🌸<br>
       I will always respect you and be grateful to have you 😊
     </p>
 
-    <!-- 🎂 Cake GIF -->
-  
- <img 
-  src="https://www.lovethispic.com/image/374515/vintage-nature-happy-birthday-gif.gif"
-  id="cakeGif"
-  class="w-56 mx-auto mt-4 rounded-xl"
->
+    <!-- Cake GIF -->
+    <img 
+      src="cake.gif"
+      id="cakeGif"
+      class="w-56 mx-auto mt-4 rounded-xl"
+    >
 
   </div>
 </div>
 
 </div>
 
+<!-- Birthday Popup -->
+<div id="birthdayPopup">
+
+  <!-- glowing cracks -->
+  <div class="crack" style="left:10%; top:10%; transform: rotate(20deg);"></div>
+  <div class="crack" style="right:15%; top:20%; transform: rotate(-20deg);"></div>
+  <div class="crack" style="left:50%; top:5%; transform: rotate(10deg);"></div>
+  <div class="crack" style="right:40%; bottom:10%; transform: rotate(40deg);"></div>
+
+  <div class="popupBox">
+    <h1 class="text-5xl font-bold text-yellow-300 animate-pulse">
+      🎂 Wish You Happy Birthday 🎂
+    </h1>
+
+    <p class="mt-6 text-xl text-pink-200">
+      May your life always be filled with happiness, success, peace and beautiful smiles 💖
+    </p>
+
+    <img 
+      src="cake.gif"
+      class="w-60 mx-auto mt-6 rounded-xl shadow-2xl"
+    >
+
+    <button onclick="closePopup()" class="btn mt-6">
+      Close 💖
+    </button>
+  </div>
+</div>
+
 <script>
+
 function show(id) {
   document.querySelectorAll('#app > div').forEach(el => el.classList.add('hidden'));
   document.getElementById(id).classList.remove('hidden');
@@ -152,75 +265,123 @@ function start() {
 
 function next(n) {
   show('s' + n);
+
   if(n === 3) typeText();
 }
 
-// message
+// Typing Message
 let msg = "You are not just my mam… you are someone who always guides me with patience and care. Your support gives me confidence, and your words give me strength. I feel very lucky to have someone like you in my life. I truly respect you, and at the same time, I feel a comfort like a sister when I talk to you 💖";
 
 function typeText() {
+
   let i = 0;
+
   let el = document.getElementById('text');
+
   el.innerHTML = "";
+
   function t() {
+
     if (i < msg.length) {
+
       el.innerHTML += msg[i++];
+
       setTimeout(t, 35);
+
     }
+
   }
+
   t();
 }
 
-// quotes
+// Quotes
 let quotes = [
   "A great teacher inspires, guides, and cares deeply",
   "Some people earn respect, some earn a place in the heart",
   "Your guidance has made a difference in my life",
   "Respect is taught, but care is felt 💖",
-  "You are someone I truly admire and respect"
+  "First by way you are my mam, but always you feel like my sister 🌸"
 ];
 
 let qIndex = 0;
+
 function changeQuote(){
+
   let el = document.getElementById("quote");
+
   if(!el) return;
+
   el.innerHTML = quotes[qIndex];
+
   qIndex = (qIndex + 1) % quotes.length;
 }
+
 setInterval(changeQuote, 2500);
 
-// hearts
+// Hearts
 setInterval(() => {
+
   let h = document.createElement('div');
+
   h.className = 'heart';
+
   h.innerHTML = '💖';
+
   h.style.left = Math.random() * 100 + 'vw';
+
   document.body.appendChild(h);
+
   setTimeout(() => h.remove(), 6000);
+
 }, 700);
 
-// celebrate
+// Celebrate
 function celebrate() {
+
   document.getElementById('finalMsg').classList.remove('hidden');
 
-  // show cake
   setTimeout(() => {
     document.getElementById('cakeGif').classList.add('showCake');
   }, 500);
 
+  // confetti
   for (let i = 0; i < 100; i++) {
+
     let c = document.createElement('div');
+
     c.style.position = 'fixed';
+
     c.style.width = '8px';
+
     c.style.height = '8px';
+
     c.style.background = ['gold','pink','white'][Math.floor(Math.random()*3)];
+
     c.style.left = Math.random() * 100 + 'vw';
+
     c.style.top = '-10px';
+
+    c.style.borderRadius = '50%';
+
     c.style.animation = 'fall 3s linear';
+
     document.body.appendChild(c);
+
     setTimeout(() => c.remove(), 3000);
   }
+
+  // popup after 2 sec
+  setTimeout(() => {
+    document.getElementById('birthdayPopup').classList.add('show');
+  }, 2000);
 }
+
+// close popup
+function closePopup() {
+  document.getElementById('birthdayPopup').classList.remove('show');
+}
+
 </script>
 
 </body>
