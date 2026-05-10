@@ -173,62 +173,33 @@ img:hover{
   }
 }
 
-/* Glowing crack lines */
-.crack{
-  position:absolute;
-  width:4px;
-  height:220px;
-  background:linear-gradient(to bottom,transparent,gold,white);
-  opacity:0;
-  filter:blur(1px);
-}
-
-.burst{
-  animation:burstCrack 1s ease forwards;
-}
-
-@keyframes burstCrack{
-  0%{
-    opacity:0;
-    transform:scaleY(0) rotate(0deg);
-  }
-  40%{
-    opacity:1;
-  }
-  100%{
-    opacity:1;
-    transform:scaleY(1.4) rotate(15deg);
-    box-shadow:0 0 30px gold,0 0 60px white;
-  }
-}
-
-/* Spark particles */
-.spark{
+/* Fireworks */
+.firework{
   position:fixed;
-  width:10px;
-  height:10px;
+  width:8px;
+  height:8px;
   border-radius:50%;
-  pointer-events:none;
-  animation:sparkFly 2s linear forwards;
+  animation:explode 1.5s ease-out forwards;
+  z-index:9999;
 }
 
-@keyframes sparkFly{
+@keyframes explode{
   0%{
-    transform:scale(1);
+    transform:translate(0,0) scale(1);
     opacity:1;
   }
   100%{
-    transform:translateY(300px) scale(0);
+    transform:translate(var(--x), var(--y)) scale(0);
     opacity:0;
   }
 }
 
-/* Floating glow circles */
+/* Floating glow */
 .glow{
   position:absolute;
   border-radius:50%;
-  background:rgba(255,215,0,0.15);
-  filter:blur(40px);
+  background:rgba(255,215,0,0.12);
+  filter:blur(50px);
   animation:floatGlow 6s ease-in-out infinite alternate;
 }
 
@@ -251,7 +222,6 @@ img:hover{
   <source src="music.mp3">
 </audio>
 
-<!-- Background glow -->
 <div class="glow w-72 h-72 top-10 left-10"></div>
 <div class="glow w-96 h-96 bottom-10 right-10"></div>
 
@@ -316,8 +286,7 @@ img:hover{
   <img src="photo2.jpg" class="w-64 mx-auto">
 
   <p class="text-gray-300 text-lg leading-8">
-    You are not just my teacher...  
-    you are someone I deeply respect, trust, and feel comfortable with like my own sister 🌸
+    You are not just my teacher... you are someone I deeply respect and feel comfortable with like my own sister 🌸
   </p>
 
   <button onclick="celebrate()" class="btn">
@@ -327,12 +296,9 @@ img:hover{
   <div id="finalMsg" class="hidden mt-4 space-y-4">
 
     <p class="text-lg text-yellow-300 leading-8">
-      Thank you for always guiding me, supporting me, motivating me and believing in me 💖<br>
-      Your care means more than words can explain 🌸<br>
-      I will always respect you and feel grateful to have someone like you in my life 😊
+      Thank you for always guiding me, supporting me and motivating me 💖
     </p>
 
-    <!-- Cake GIF -->
     <img
       src="cake.gif"
       id="cakeGif"
@@ -348,13 +314,6 @@ img:hover{
 <!-- Popup -->
 <div id="birthdayPopup">
 
-  <!-- cracks -->
-  <div class="crack" style="left:10%;top:10%;"></div>
-  <div class="crack" style="right:15%;top:15%;"></div>
-  <div class="crack" style="left:50%;top:5%;"></div>
-  <div class="crack" style="right:40%;bottom:5%;"></div>
-  <div class="crack" style="left:25%;bottom:10%;"></div>
-
   <div class="popupBox">
 
     <h1 class="text-5xl font-bold text-yellow-300 animate-pulse">
@@ -362,7 +321,7 @@ img:hover{
     </h1>
 
     <p class="mt-6 text-xl text-pink-200 leading-8">
-      May your life always be filled with happiness, peace, success and beautiful smiles 💖
+      May your life always be filled with happiness, peace and beautiful smiles 💖
     </p>
 
     <img
@@ -386,31 +345,38 @@ img:hover{
 
 /* show screens */
 function show(id){
+
   document.querySelectorAll('#app > div').forEach(el=>{
     el.classList.add('hidden');
   });
 
   document.getElementById(id).classList.remove('hidden');
+
 }
 
 /* start */
 function start(){
+
   document.getElementById('music').play();
+
   show('s2');
+
 }
 
 /* next */
 function next(n){
+
   show('s'+n);
 
   if(n===3){
     typeText();
   }
+
 }
 
 /* typing text */
 let msg =
-"First by way you are my mam… but in my heart, you are always like one of my family members 🌸 Your guidance, kindness and support make me feel comfortable and motivated every day. You are not only someone I deeply respect, but also one of my biggest inspirations in life. Your words give me confidence, your care gives me peace, and your encouragement gives me strength. I truly feel lucky and grateful to have someone like you in my life 💖";
+"First by way you are my mam… but in my heart, you are always like one of my family members 🌸 Your guidance, kindness and support make me feel comfortable and motivated every day. You are not only someone I deeply respect, but also one of my biggest inspirations in life 💖";
 
 function typeText(){
 
@@ -436,13 +402,12 @@ function typeText(){
 
 }
 
-/* rotating quotes */
+/* Quotes */
 let quotes=[
 "A great teacher inspires, guides, and cares deeply 💖",
-"Some people earn respect, some earn a place in the heart 🌸",
 "Your guidance has made a beautiful difference in my life ✨",
-"First by way you are my mam, but always you feel like my sister 💕",
-"Your words motivate me more than you know 🌷"
+"You inspires me a lot and now now you are my inspiration  🌸",
+"Your words motivate me more than you know 💕"
 ];
 
 let qIndex=0;
@@ -461,7 +426,7 @@ function changeQuote(){
 
 setInterval(changeQuote,2500);
 
-/* floating hearts */
+/* hearts */
 setInterval(()=>{
 
   let h=document.createElement('div');
@@ -480,7 +445,38 @@ setInterval(()=>{
 
 },700);
 
-/* celebrate */
+/* FIREWORKS */
+function createFirework(x,y){
+
+  const colors=['#ffcc00','#ff66ff','#ffffff','#ff4444','#66ccff'];
+
+  for(let i=0;i<40;i++){
+
+    let f=document.createElement('div');
+
+    f.className='firework';
+
+    f.style.left=x+'px';
+
+    f.style.top=y+'px';
+
+    f.style.background=colors[Math.floor(Math.random()*colors.length)];
+
+    f.style.setProperty('--x',(Math.random()-0.5)*300+'px');
+
+    f.style.setProperty('--y',(Math.random()-0.5)*300+'px');
+
+    document.body.appendChild(f);
+
+    setTimeout(()=>{
+      f.remove();
+    },1500);
+
+  }
+
+}
+
+/* Celebrate */
 function celebrate(){
 
   document.getElementById('finalMsg').classList.remove('hidden');
@@ -489,63 +485,25 @@ function celebrate(){
     document.getElementById('cakeGif').classList.add('showCake');
   },500);
 
-  /* confetti */
-  for(let i=0;i<120;i++){
-
-    let c=document.createElement('div');
-
-    c.style.position='fixed';
-
-    c.style.width='10px';
-
-    c.style.height='10px';
-
-    c.style.background=
-    ['gold','pink','white','orange'][Math.floor(Math.random()*4)];
-
-    c.style.left=Math.random()*100+'vw';
-
-    c.style.top='-10px';
-
-    c.style.borderRadius='50%';
-
-    c.style.animation='sparkFly 3s linear forwards';
-
-    document.body.appendChild(c);
-
-    setTimeout(()=>c.remove(),3000);
-
-  }
-
   /* popup */
   setTimeout(()=>{
 
     document.getElementById('birthdayPopup').classList.add('show');
 
-    /* crack burst animation */
-    document.querySelectorAll('.crack').forEach(c=>{
-      c.classList.add('burst');
-    });
+    /* real fireworks burst */
+    let interval=setInterval(()=>{
 
-    /* sparks */
-    for(let i=0;i<80;i++){
+      createFirework(
+        Math.random()*window.innerWidth,
+        Math.random()*window.innerHeight/1.5
+      );
 
-      let s=document.createElement('div');
+    },500);
 
-      s.className='spark';
-
-      s.style.left=Math.random()*100+'vw';
-
-      s.style.top=Math.random()*100+'vh';
-
-      s.style.background=
-      ['gold','white','pink'][Math.floor(Math.random()*3)];
-
-      document.body.appendChild(s);
-
-      setTimeout(()=>s.remove(),2000);
-
-    }
+    /* stop after 10 sec */
+    setTimeout(()=>{
+      clearInterval(interval);
+    },10000);
 
   },2000);
 
